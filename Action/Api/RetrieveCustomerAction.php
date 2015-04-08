@@ -1,7 +1,7 @@
 <?php
 namespace Payum\Stripe\Action\Api;
 
-use Payum\Core\Action\PaymentAwareAction;
+use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Model\ArrayObject as ArrayObjectModel;
@@ -11,7 +11,7 @@ use Payum\Stripe\Keys;
 use Payum\Stripe\Request\Api\RetrieveCustomer;
 use Payum\Stripe\Request\Api\ObtainToken;
 
-class RetrieveCustomerAction extends PaymentAwareAction implements ApiAwareInterface
+class RetrieveCustomerAction extends GatewayAwareAction implements ApiAwareInterface
 {
     /**
      * @var Keys
