@@ -5,6 +5,12 @@ use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\PaymentFactory as CorePaymentFactory;
 use Payum\Core\PaymentFactoryInterface;
 use Payum\Stripe\Action\Api\CreateChargeAction;
+use Payum\Stripe\Action\Api\CreateCustomerAction;
+use Payum\Stripe\Action\Api\RetrieveCustomerAction;
+use Payum\Stripe\Action\Api\RetrieveEventAction;
+use Payum\Stripe\Action\Api\RetrieveChargeAction;
+use Payum\Stripe\Action\Api\CancelSubscriptionAction;
+use Payum\Stripe\Action\Api\ReactivateSubscriptionAction;
 use Payum\Stripe\Action\Api\ObtainTokenAction;
 use Payum\Stripe\Action\CaptureAction;
 use Payum\Stripe\Action\FillOrderDetailsAction;
@@ -62,6 +68,12 @@ class CheckoutPaymentFactory implements PaymentFactoryInterface
                 return new ObtainTokenAction($config['payum.template.obtain_token']);
             },
             'payum.action.create_charge' => new CreateChargeAction(),
+            'payum.action.create_customer' => new CreateCustomerAction(),
+            'payum.action.retrieve_customer' => new RetrieveCustomerAction(),
+            'payum.action.retrieve_event' => new RetrieveEventAction(),
+            'payum.action.retrieve_charge' => new RetrieveChargeAction(),
+            'payum.action.cancel_subscription' => new CancelSubscriptionAction(),
+            'payum.action.cancel_subscription' => new ReactivateSubscriptionAction(),
         ));
 
         if (false == $config['payum.api']) {
