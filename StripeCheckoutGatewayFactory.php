@@ -73,7 +73,7 @@ class StripeCheckoutGatewayFactory implements GatewayFactoryInterface
             'payum.action.retrieve_event' => new RetrieveEventAction(),
             'payum.action.retrieve_charge' => new RetrieveChargeAction(),
             'payum.action.cancel_subscription' => new CancelSubscriptionAction(),
-            'payum.action.cancel_subscription' => new ReactivateSubscriptionAction(),
+            'payum.action.reactivate_subscription' => new ReactivateSubscriptionAction(),
         ));
 
         if (false == $config['payum.api']) {
