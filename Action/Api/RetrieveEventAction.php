@@ -34,7 +34,7 @@ class RetrieveEventAction implements ActionInterface, ApiAwareInterface
      */
     public function execute($request)
     {
-        /** @var $request CreateCharge */
+        /** @var $request RetrieveEvent */
         RequestNotSupportedException::assertSupports($this, $request);
 
         $model = ArrayObject::ensureArrayObject($request->getModel());

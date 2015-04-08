@@ -1,7 +1,7 @@
 <?php
 namespace Payum\Stripe\Action\Api;
 
-use Payum\Core\Action\PaymentAwareAction;
+use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\ApiAwareInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Model\ArrayObject as ArrayObjectModel;
@@ -11,7 +11,7 @@ use Payum\Stripe\Keys;
 use Payum\Stripe\Request\Api\CreateCustomer;
 use Payum\Stripe\Request\Api\ObtainToken;
 
-class CreateCustomerAction extends PaymentAwareAction implements ApiAwareInterface
+class CreateCustomerAction extends GatewayAwareAction implements ApiAwareInterface
 {
     /**
      * @var Keys
@@ -35,14 +35,14 @@ class CreateCustomerAction extends PaymentAwareAction implements ApiAwareInterfa
      */
     public function execute($request)
     {
-        /** @var $request CreateCharge */
+        /** @var $request CreateCustomer */
         RequestNotSupportedException::assertSupports($this, $request);
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
         $model->validateNotEmpty(array('plan'));
 
         if (false == $model['card']) {
-            $this->payment->execute(new ObtainToken($model));
+            $this->gateway->execute(new ObtainToken($model));
         }
 
         \Stripe::setApiKey($this->keys->getSecretKey());

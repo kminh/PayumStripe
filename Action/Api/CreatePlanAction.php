@@ -34,7 +34,7 @@ class CreatePlanAction extends PaymentAwareAction implements ApiAwareInterface
      */
     public function execute($request)
     {
-        /** @var $request CreateCharge */
+        /** @var $request CreatePlan */
         RequestNotSupportedException::assertSupports($this, $request);
 
         $model = ArrayObject::ensureArrayObject($request->getModel());

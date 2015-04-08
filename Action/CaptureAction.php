@@ -1,7 +1,7 @@
 <?php
 namespace Payum\Stripe\Action;
 
-use Payum\Core\Action\PaymentAwareAction;
+use Payum\Core\Action\GatewayAwareAction;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Exception\RequestNotSupportedException;
 use Payum\Core\Model\ArrayObject as ArrayObjectModel;
@@ -11,7 +11,7 @@ use Payum\Stripe\Request\Api\ObtainToken;
 use Payum\Stripe\Request\Api\CreateCustomer;
 use Payum\Stripe\Request\Api\CreatePlan;
 
-class CaptureAction extends PaymentAwareAction
+class CaptureAction extends GatewayAwareAction
 {
     /**
      * {@inheritDoc}
@@ -29,16 +29,16 @@ class CaptureAction extends PaymentAwareAction
         }
 
         if (false == $model['card']) {
-            $this->payment->execute(new ObtainToken($model));
+            $this->gateway->execute(new ObtainToken($model));
         }
 
         // if plan is set we need to subscribe
         if (!empty($model['plan'])) {
-            $this->payment->execute(new CreateCustomer($model));
+            $this->gateway->execute(new CreateCustomer($model));
             return;
         }
 
-        $this->payment->execute(new CreateCharge($model));
+        $this->gateway->execute(new CreateCharge($model));
     }
 
     /**

@@ -34,7 +34,7 @@ class RetrieveChargeAction implements ActionInterface, ApiAwareInterface
      */
     public function execute($request)
     {
-        /** @var $request CreateCharge */
+        /** @var $request RetrieveCharge */
         RequestNotSupportedException::assertSupports($this, $request);
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
