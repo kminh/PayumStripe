@@ -63,13 +63,16 @@ class CreateCustomerAction extends GatewayAwareAction implements ApiAwareInterfa
 
                 // create new subscription for this customer
                 try {
-                    $subscription = $customer->subscriptions->create($model->toUnsafeArray());
-                    $model->replace($subscription->__toArray(true));
+                    // in case this customer exists but has no subscription we
+                    // can't create new one, must create new customer
+                    if (!is_null($customer->subscriptions)) {
+                        $subscription = $customer->subscriptions->create($model->toUnsafeArray());
+                        $model->replace($subscription->__toArray(true));
+                        return;
+                    }
                 } catch (\Stripe_Error $e) {
                     $model->replace($e->getJsonBody());
                 }
-
-                return;
             } catch (\Stripe_Error $e) {
                 // probably customer does not exist yet
             }
