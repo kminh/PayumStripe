@@ -39,7 +39,7 @@ class CreateCustomerAction extends GatewayAwareAction implements ApiAwareInterfa
         RequestNotSupportedException::assertSupports($this, $request);
 
         $model = ArrayObject::ensureArrayObject($request->getModel());
-        $model->validateNotEmpty(array('plan'));
+        $model->validateNotEmpty(array('plan', 'description', 'cus_description', 'email', 'metadata'));
 
         if (false == $model['card']) {
             $this->gateway->execute(new ObtainToken($model));
@@ -47,12 +47,15 @@ class CreateCustomerAction extends GatewayAwareAction implements ApiAwareInterfa
 
         \Stripe::setApiKey($this->keys->getSecretKey());
 
-        // remove unused data
+        // backup and remove unused data
         $customerDescription = $model['cus_description'];
-        $email = $model['email'];
+        $email               = $model['email'];
+        $metaData            = $model['metadata'];
+
         unset($model['description']);
         unset($model['cus_description']);
         unset($model['email']);
+        unset($model['metadata']);
 
         // if an id is set, we try to retrieve customer first
         if (!empty($model['id'])) {
@@ -104,8 +107,9 @@ class CreateCustomerAction extends GatewayAwareAction implements ApiAwareInterfa
         }
 
         // should have when creating new customer
-        $model['email'] = $email;
+        $model['email']       = $email;
         $model['description'] = $customerDescription;
+        $model['metadata']    = $metaData;
 
         // new customer
         try {
