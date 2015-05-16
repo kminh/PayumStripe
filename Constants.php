@@ -19,6 +19,8 @@ class Constants
 
     const EVENTTYPE_INVOICE_PAYMENT_SUCCEEDED = 'invoice.payment_succeeded';
 
+    const EVENTTYPE_INVOICE_CREATED = 'invoice.created';
+
     private function __construct()
     {
     }

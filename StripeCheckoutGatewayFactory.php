@@ -4,14 +4,7 @@ namespace Payum\Stripe;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\GatewayFactory as CoreGatewayFactory;
 use Payum\Core\GatewayFactoryInterface;
-use Payum\Stripe\Action\Api\CreateChargeAction;
-use Payum\Stripe\Action\Api\CreateCustomerAction;
-use Payum\Stripe\Action\Api\RetrieveCustomerAction;
-use Payum\Stripe\Action\Api\RetrieveEventAction;
-use Payum\Stripe\Action\Api\RetrieveChargeAction;
-use Payum\Stripe\Action\Api\CancelSubscriptionAction;
-use Payum\Stripe\Action\Api\ReactivateSubscriptionAction;
-use Payum\Stripe\Action\Api\ObtainTokenAction;
+use Payum\Stripe\Action\Api;
 use Payum\Stripe\Action\CaptureAction;
 use Payum\Stripe\Action\FillOrderDetailsAction;
 use Payum\Stripe\Action\StatusAction;
@@ -65,15 +58,16 @@ class StripeCheckoutGatewayFactory implements GatewayFactoryInterface
             'payum.action.fill_order_details' => new FillOrderDetailsAction(),
             'payum.action.status' => new StatusAction(),
             'payum.action.obtain_token' => function (ArrayObject $config) {
-                return new ObtainTokenAction($config['payum.template.obtain_token']);
+                return new Api\ObtainTokenAction($config['payum.template.obtain_token']);
             },
-            'payum.action.create_charge' => new CreateChargeAction(),
-            'payum.action.create_customer' => new CreateCustomerAction(),
-            'payum.action.retrieve_customer' => new RetrieveCustomerAction(),
-            'payum.action.retrieve_event' => new RetrieveEventAction(),
-            'payum.action.retrieve_charge' => new RetrieveChargeAction(),
-            'payum.action.cancel_subscription' => new CancelSubscriptionAction(),
-            'payum.action.reactivate_subscription' => new ReactivateSubscriptionAction(),
+            'payum.action.create_charge' => new Api\CreateChargeAction(),
+            'payum.action.create_customer' => new Api\CreateCustomerAction(),
+            'payum.action.update_customer' => new Api\UpdateCustomerAction(),
+            'payum.action.retrieve_customer' => new Api\RetrieveCustomerAction(),
+            'payum.action.retrieve_event' => new Api\RetrieveEventAction(),
+            'payum.action.retrieve_charge' => new Api\RetrieveChargeAction(),
+            'payum.action.cancel_subscription' => new Api\CancelSubscriptionAction(),
+            'payum.action.reactivate_subscription' => new Api\ReactivateSubscriptionAction(),
         ));
 
         if (false == $config['payum.api']) {
