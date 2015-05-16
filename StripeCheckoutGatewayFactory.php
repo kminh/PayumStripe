@@ -6,7 +6,7 @@ use Payum\Core\GatewayFactory as CoreGatewayFactory;
 use Payum\Core\GatewayFactoryInterface;
 use Payum\Stripe\Action\Api;
 use Payum\Stripe\Action\CaptureAction;
-use Payum\Stripe\Action\FillOrderDetailsAction;
+use Payum\Stripe\Action\ConvertPaymentAction;
 use Payum\Stripe\Action\StatusAction;
 
 class StripeCheckoutGatewayFactory implements GatewayFactoryInterface
@@ -55,7 +55,7 @@ class StripeCheckoutGatewayFactory implements GatewayFactoryInterface
             'payum.template.obtain_token' => '@PayumStripe/Action/obtain_checkout_token.html.twig',
 
             'payum.action.capture' => new CaptureAction(),
-            'payum.action.fill_order_details' => new FillOrderDetailsAction(),
+            'payum.action.convert_payment' => new ConvertPaymentAction(),
             'payum.action.status' => new StatusAction(),
             'payum.action.obtain_token' => function (ArrayObject $config) {
                 return new Api\ObtainTokenAction($config['payum.template.obtain_token']);
